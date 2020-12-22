@@ -20,15 +20,16 @@ window.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', (e)=> {
         e.preventDefault();
         if (!input.value == '') {
-            let data = new Date().toLocaleDateString('ko-KR'),
+            let data = new Date().toLocaleDateString(),
                 obj = {
                     task: input.value,
                     status: false,
                     createDate: `${data}`,
                     important: false
-                };
+                },
+                i = lists.length;
 
-            lists.push(obj);
+            lists[i] = obj;
             form.reset();
             domList(lists);
             localStorage.setItem('arr', JSON.stringify(lists));
@@ -37,32 +38,21 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 
     function btnLists () {
+        let li = wrap.children;
         wrap.addEventListener('click', (e) => {
-            let li = wrap.children;
             for (let ind = 0; ind < lists.length; ind++) {
                 //delete
-                if (e.target == li[ind].children[4]) {
-                    lists.splice(ind,1);
+                if (e.target === li[ind].children[4]) {
+                    lists.splice(ind,1)
                 }
-                 // Status
-                else if(e.target == li[ind].children[1]) {
-                    if (lists[ind].status == true){
-                        lists[ind].status = false;
-                    }else {
-                        lists[ind].status = true;
-                    }
+                // Status
+                else if(e.target === li[ind].children[1]) {
+                    lists[ind].status = !lists[ind].status;
                 }
                 // Important
-                else if (e.target == li[ind].children[3]) {
-                    if (lists[ind].important == true){
-                        lists[ind].important = false
-                    } else {
-                        lists[ind].important = true
-                    }
-                    lists = [
-                        ...lists.filter(item => item.important == true),
-                        ...lists.filter(item => item.important != true)
-                    ];
+                else if (e.target === li[ind].children[3]) {
+                    lists[ind].important = !lists[ind].important;
+                    lists.sort((a,b) => b.important - a.important);
                 }
             }
             domList(lists);
@@ -79,12 +69,14 @@ window.addEventListener('DOMContentLoaded', () => {
                     <span class="${item.status? 'status':''}">${ind + 1})</span>
                     <span class="${item.status? 'status':''}">${item.task}</span>
                     <span class="${item.status? 'status':''}">${item.createDate}</span>
-                    <button class="btn">Important</button>
+                    <button class="btn ">Important</button>
                     <button class="btn">Delete</button>
                 </li>
             `;
+
         })
-        wrap.insertAdjacentHTML('beforeend', out);
+        wrap.insertAdjacentHTML('afterbegin', out);
         btnLists();
-    }
+    };
+
 })
