@@ -12,7 +12,6 @@ window.addEventListener('DOMContentLoaded', () => {
         ],
         local = localStorage.getItem('arr');
 
-
     local == undefined? lists:  lists = JSON.parse(local);
 
     domList(lists);
@@ -20,16 +19,13 @@ window.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', (e)=> {
         e.preventDefault();
         if (!input.value == '') {
-            let data = new Date().toLocaleDateString(),
-                obj = {
-                    task: input.value,
-                    status: false,
-                    createDate: `${data}`,
-                    important: false
-                },
-                i = lists.length;
-
-            lists[i] = obj;
+            let data = new Date().toLocaleDateString();
+            lists.push({
+                task: input.value,
+                status: false,
+                createDate: `${data}`,
+                important: false
+            });
             form.reset();
             domList(lists);
             localStorage.setItem('arr', JSON.stringify(lists));
