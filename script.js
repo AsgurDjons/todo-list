@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     btn.addEventListener('click', (e)=> {
         e.preventDefault();
-        if (!input.value == '') {
+        if (input.value !== '') {
             let data = new Date().toLocaleDateString();
             lists.push({
                 task: input.value,
