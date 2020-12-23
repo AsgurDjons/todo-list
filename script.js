@@ -40,19 +40,23 @@ window.addEventListener('DOMContentLoaded', () => {
                 //delete
                 if (e.target === li[ind].children[4]) {
                     lists.splice(ind,1)
+                    domList(lists);
+                    localStorage.setItem('arr', JSON.stringify(lists));
                 }
                 // Status
                 else if(e.target === li[ind].children[1]) {
                     lists[ind].status = !lists[ind].status;
+                    domList(lists);
+                    localStorage.setItem('arr', JSON.stringify(lists));
                 }
                 // Important
                 else if (e.target === li[ind].children[3]) {
                     lists[ind].important = !lists[ind].important;
                     lists.sort((a,b) => b.important - a.important);
+                    domList(lists);
+                    localStorage.setItem('arr', JSON.stringify(lists));
                 }
             }
-            domList(lists);
-            localStorage.setItem('arr', JSON.stringify(lists));
         })
     }
 
@@ -72,7 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         })
         wrap.insertAdjacentHTML('afterbegin', out);
-        btnLists();
+        btnLists ();
     };
 
 })
